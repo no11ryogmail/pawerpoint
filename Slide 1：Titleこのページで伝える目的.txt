@@ -1,0 +1,73 @@
+Slide 1：Titleこのページで伝える目的
+発表タイトルと研究テーマを簡潔に伝え、MPCとRRLを組み合わせた高精度制御について話すことを示す。   英語原稿
+Hello everyone. Today, I will talk about high-precision control using model predictive control and residual reinforcement learning. Thank you for listening.日本語訳
+みなさん、こんにちは。本日は、モデル予測制御と残差強化学習を用いた高精度制御についてお話しします。よろしくお願いします。前後のページとのつながり
+研究テーマを提示したあと、次の Slide 2 で「なぜ高精度制御が必要なのか」という背景へつなげる。   Slide 2：Backgroundこのページで伝える目的
+エアホッケーロボットを例に、パドルを正確に動かすための高精度制御が重要であることを伝える。   英語原稿
+First, let me share the background. I developed an air hockey robot before. In air hockey, the robot hits a moving puck with a paddle. To hit the puck well, the paddle must move to the right position. Even a small position error can cause a missed strike. So, high-precision motion control is very important.日本語訳
+まず、背景をお話しします。私は以前、エアホッケーロボットを開発しました。エアホッケーでは、ロボットがパドルで動くパックを打ちます。パックをうまく打つには、パドルを正しい位置へ動かす必要があります。少しの位置ずれでも打ち損じにつながることがあります。そのため、高精度な動作制御がとても重要です。前後のページとのつながり
+「高精度制御が重要である」という結論から、次の Slide 3 で「では実際の制御にはどんな課題があるのか」へとつなげる。   Slide 3：Challenges in Robot Controlこのページで伝える目的
+従来の制御手法でも追従誤差が発生することをグラフで示し、高精度制御の実現が課題であることを伝える。   英語原稿
+However, tracking errors can happen in real control. This graph shows a reference trajectory and an actual trajectory with a conventional controller. You can see a gap between them. This happens because of model errors and disturbances. Achieving high-precision control is still an important challenge.日本語訳
+しかし、実際の制御では追従誤差が発生することがあります。このグラフは、従来制御器を用いたときの目標軌道と実際の軌道を示しています。両者にずれがあるのがわかります。これはモデル誤差や外乱などが原因で起こります。高精度な制御を実現することは、今も重要な課題です。前後のページとのつながり
+従来制御で生じる誤差という課題を示したうえで、次の Slide 4 で「その課題をどう解決するか（MPCとRRLの組み合わせ）」という動機へつなげる。   Slide 4：Research Motivationこのページで伝える目的
+MPCとRRLを組み合わせる動機を説明し、少ない学習回数で高精度制御を目指す長期目標にも触れる。   英語原稿
+To solve this problem, I focus on combining MPC and RRL. MPC uses a system model to predict and control the system. RRL learns an additional control input to compensate for errors. By combining them, I aim for high-precision control. My long-term goal is also to achieve accurate control with fewer learning iterations.日本語訳
+この課題を解決するため、私はMPCとRRLを組み合わせることに注目しています。MPCはシステムモデルを使って予測し、制御します。RRLは誤差を補うための追加の制御入力を学習します。これらを組み合わせることで、高精度な制御を目指しています。また、より少ない学習回数で高精度な制御を実現することも長期的な目標です。前後のページとのつながり
+研究の動機を示したあと、Slide 5 と Slide 6 でそれぞれの手法（MPCとRRL）の基本を順番に説明する。   Slide 5：Model Predictive Controlこのページで伝える目的
+MPCが各時間ステップで「予測・最適化・制御」を繰り返して制御入力を決める仕組みを説明する。   英語原稿
+Let me briefly explain MPC. MPC repeats three steps at each time step. First, prediction: it predicts future system behavior using a system model. Second, optimization: it calculates optimal control inputs from the prediction. Third, control: it applies the first control input to the system. Repeating this loop lets MPC control the system step by step.日本語訳
+MPCについて簡単に説明します。MPCは各時間ステップで3つのステップを繰り返します。1つ目は予測で、システムモデルを使って将来のシステムの動きを予測します。2つ目は最適化で、予測をもとに最適な制御入力を計算します。3つ目は制御で、最初の制御入力をシステムに適用します。このループを繰り返すことで、MPCは段階的にシステムを制御します。前後のページとのつながり
+モデルに基づくMPCの仕組みを説明したあと、次の Slide 6 で「そこに強化学習を組み合わせるRRL」の仕組みへつなげる。   Slide 6：Residual Reinforcement Learningこのページで伝える目的
+既存制御器とRLポリシーを並列に足し合わせるRRLの仕組みと利点を、聞き手が理解できるように説明する。   英語原稿
+Next, let me explain RRL. RRL combines an existing controller with a reinforcement learning policy. The existing controller generates the base control input. The RL policy learns an additional control input, called the residual input. These two inputs are added together to make the final control input. The benefit of RRL is that it uses an existing controller and learns only extra compensation for errors.日本語訳
+次に、RRLについて説明します。RRLは既存の制御器と強化学習ポリシーを組み合わせる手法です。既存の制御器が基本となる制御入力を生成します。RLポリシーは、残差入力と呼ばれる追加の制御入力を学習します。これら2つの入力を足し合わせて、最終的な制御入力を作ります。RRLの利点は、既存の制御器を活用しながら、誤差を補う追加分だけを学習できることです。前後のページとのつながり
+RRLの仕組みを説明したあと、次の Slide 7 で「RRLをどのような報酬関数で学習させるか」へつなげる。   Slide 7：Reward Functionこのページで伝える目的
+報酬関数の6つの項の役割と、MPCとの衝突や大きな誤差を抑える学習方針をわかりやすく説明する。   英語原稿
+Here is the reward function used to train RRL. The first three terms penalize tracking errors in joint angle, angular velocity, and angular acceleration. The remaining terms manage the learning behavior. Specifically, r ratio checks the size of the residual torque. r conflict gives a penalty when MPC and RRL push in opposite directions. r penalty penalizes large tracking errors.日本語訳
+こちらはRRLを学習させるための報酬関数です。最初の3つの項は、関節角度、角速度、角加速度の追従誤差にペナルティを与えます。残りの項は学習の挙動を調整します。具体的には、r ratioは残差トルクの割合を見ます。r conflictはMPCとRRLが反対方向の力を出すときにペナルティを与えます。r penaltyは大きな追従誤差に対するペナルティです。前後のページとのつながり
+報酬関数によるRRLの学習方針を説明したあと、次の Slide 8 で「MPCとRRLを組み合わせた全体の制御フレームワーク」へつなげる。   Slide 8：MPC-RRL Control Frameworkこのページで伝える目的
+MPCとRRLがどのように接続され、誤差入力から最終制御入力を計算し、閉ループで動作するかを説明する。   英語原稿
+This slide shows the MPC-RRL control framework. MPC calculates the base control input from the state and reference trajectory. At the same time, RRL takes joint angle, velocity, and acceleration errors as its observation and outputs the residual control input. We add both inputs to get the final control input u. This input is applied to the system, and the state is fed back at each step.日本語訳
+このスライドはMPC-RRLの制御フレームワークを示しています。MPCは状態と目標軌道から基本の制御入力を計算します。同時に、RRLは関節角度・角速度・角加速度の誤差を観測として受け取り、残差制御入力を出力します。両方の入力を足し合わせて最終的な制御入力uを得ます。この入力をシステムに適用し、各ステップで状態をフィードバックします。前後のページとのつながり
+制御手法の全体像を示したあと、次の Slide 9 で「この手法について今回の研究で確認したい目的」へつなげる。   Slide 9：Research Objectivesこのページで伝える目的
+今回の研究で確認したい3つの目的を簡潔に伝え、後の実験との対応を見通しよくする。   英語原稿
+Based on this framework, I have three objectives. First, I compare tracking accuracy between MPC and MPC-RRL. Second, I investigate the effect of scaling the MPC control input. Third, I examine how RRL compensates for changes in the MPC input. Let me explain the simulation setup next.日本語訳
+このフレームワークに基づき、3つの目的を設定しています。1つ目は、MPCとMPC-RRLの追従精度を比較することです。2つ目は、MPCの制御入力をスケーリングしたときの影響を調べることです。3つ目は、MPC入力の変化に対してRRLがどのように補償するかを調べることです。次はシミュレーション環境を説明します。前後のページとのつながり
+目的を提示したあと、Slide 10 と Slide 11 でシミュレーション環境と単振子モデル・パラメータを説明する。   Slide 10：Simulation Environmentこのページで伝える目的
+Isaac Sim / Isaac Labを用いた単振子シミュレーションと、512並列環境でのRRL学習を簡潔に説明する。   英語原稿
+I ran experiments in a physics simulation using Isaac Sim and Isaac Lab. The robot model is a single pendulum. For training RRL, I used 512 parallel environments to collect data efficiently.日本語訳
+実験はIsaac SimとIsaac Labを使った物理シミュレーションで行いました。ロボットモデルは単振子です。RRLの学習では、データを効率よく集めるために512個の並列環境を使用しました。前後のページとのつながり
+シミュレータと並列環境を説明したあと、次の Slide 11 で「単振子の物理パラメータと予備実験の報酬重み」へつなげる。   Slide 11：System Model and Parametersこのページで伝える目的
+単振子の物理パラメータと、予備実験で設定した報酬重み（未最適化であること）を簡潔に説明する。   英語原稿
+Here is the single pendulum model and its parameters. The mass is 7.81 kilograms, the inertia is 2.86, and the center-of-mass distance is 0.5 meters. On the left, the table shows the reward weights. These values were set in preliminary experiments and are not optimized yet.日本語訳
+こちらは単振子モデルとパラメータです。質量は7.81 kg、慣性モーメントは2.86、重心までの距離は0.5 mです。左の表は報酬の重みを示しています。これらの値は予備実験で設定したものであり、まだ最適化されていません。前後のページとのつながり
+モデルと重み設定を共有したあと、次の Slide 12 で「実施した2つの実験の条件」へつなげる。   Slide 12：Experimental Conditionsこのページで伝える目的
+Experiment 1とExperiment 2の条件、および評価指標（関節角度追従誤差）を整理して説明する。   英語原稿
+I conducted two experiments using joint angle tracking error as the evaluation metric. Experiment 1 compares MPC and MPC-RRL to check tracking accuracy. Experiment 2 scales the MPC control input by lambda equal to 0.9, 0.8, 0.7, and 0.6, while keeping the trained RRL policy fixed. This checks how the system behaves when the MPC input changes.日本語訳
+評価指標に関節角度追従誤差を用いて、2つの実験を行いました。実験1では、追従精度を確認するためにMPCとMPC-RRLを比較します。実験2では、学習済みのRRLポリシーを固定したまま、MPCの制御入力に0.9、0.8、0.7、0.6の係数を掛けます。これにより、MPC入力が変わったときの挙動を確認します。前後のページとのつながり
+実験条件を説明したあと、Slide 13 と Slide 14 でExperiment 1の軌道と誤差・数値結果を説明する。   Slide 13：Experiment 1このページで伝える目的
+MPCとMPC-RRLの目標軌道に対する追従の様子の違いを、グラフの傾向を中心に説明する。   英語原稿
+Let me show the results of Experiment 1. The top graph is MPC alone, and the bottom is MPC-RRL. The red dashed line is the reference trajectory, and the blue line is the actual trajectory. With MPC alone, there is a clear tracking error. With MPC-RRL, the actual trajectory follows the reference much more closely.日本語訳
+実験1の結果をお見せします。上がMPC単独、下がMPC-RRLです。赤の破線が目標軌道、青の実線が実際の軌道です。MPC単独でははっきりとした追従誤差が見られます。MPC-RRLでは、実際の軌道が目標軌道により近く追従しています。前後のページとのつながり
+グラフで見た追従改善の傾向から、次の Slide 14 で「誤差グラフと定量的な数値（特にMAEの低減）」へつなげる。   Slide 14：Results of Experiment 1このページで伝える目的
+追従誤差のグラフと比較表を示し、MPC-RRLによって誤差（特にMAE約79%減）が改善したことを伝える。   英語原稿
+These graphs show the joint angle error over time, and the table summarizes the results. Compared with MPC alone, MPC-RRL reduces maximum error, oscillation amplitude, and mean absolute error. In particular, the mean absolute error drops from 0.096 to 0.020 radians, which is about a 79 percent reduction. This confirms that MPC-RRL improves tracking accuracy.日本語訳
+これらのグラフは関節角度誤差の時間変化を示し、表はその結果をまとめたものです。MPC単独と比べて、MPC-RRLは最大誤差、振動振幅、平均絶対誤差をすべて減らしています。特に平均絶対誤差は0.096 radから0.020 radへと、約79%減少しました。このことから、MPC-RRLによって追従精度が改善することが確認できました。前後のページとのつながり
+Experiment 1で精度改善を確認したあと、次の Slide 15 で「MPC入力を変化させたExperiment 2」へつなげる。   Slide 15：Experiment 2このページで伝える目的
+RRLポリシーを固定した状態でMPC入力係数を変えた4条件のグラフを示し、比較のポイントを説明する。   英語原稿
+Now let me show Experiment 2. Here, the trained RRL policy is fixed, and we scale the MPC input by lambda from 0.9 down to 0.6. All four graphs use the same axis range for easy comparison. Let us look at how the initial error and the oscillation amplitude change as lambda decreases.日本語訳
+続いて実験2をお見せします。ここでは学習済みRRLポリシーを固定し、MPC入力の係数を0.9から0.6まで下げてスケーリングしています。比較しやすいように、4つのグラフすべてで軸の範囲を揃えています。係数が小さくなるときに、初期誤差と振動振幅がどう変わるかを見てみましょう。前後のページとのつながり
+4条件のグラフを見せたあと、次の Slide 16 で「観察された変化と、RRLによる補償の可能性についての考察」へつなげる。   Slide 16：Discussionこのページで伝える目的
+実験2の観察事実（初期誤差の増加、振動振幅のほぼ不変）と、RRLが補償している可能性という控えめな解釈を分けて伝える。   英語原稿
+Let me discuss these results. First, lower MPC scaling factors increased the initial tracking errors. Second, the oscillation amplitudes showed little change. This suggests that RRL may compensate for changes in MPC control inputs. However, this is not a full proof of the mechanism yet, so I state it carefully as a possibility.日本語訳
+これらの結果について考察します。まず、MPCのスケーリング係数を小さくすると、初期の追従誤差が大きくなりました。次に、振動振幅にはほとんど変化が見られませんでした。この結果は、RRLがMPCの制御入力の変化を補償している可能性を示唆しています。ただし、仕組みを完全に証明したわけではないので、可能性として慎重に述べています。前後のページとのつながり
+考察をまとめたあと、次の Slide 17 で「研究全体の結論」へつなげる。   Slide 17：Conclusionこのページで伝える目的
+これまでの実験で確認できた精度改善とスケーリング時の挙動・補償の可能性をまとめ、さらなる精度向上に向けた重み最適化につなげる。   英語原稿
+To conclude, MPC-RRL reduced joint angle tracking errors compared with MPC alone. When scaling the MPC control input, lower scaling factors increased initial tracking errors, while oscillation amplitudes changed little. These results suggest RRL may compensate for MPC input changes, and reward weight optimization is needed for higher accuracy.日本語訳
+まとめると、MPC-RRLはMPC単独と比べて関節角度の追従誤差を減らしました。MPC制御入力をスケーリングしたとき、係数が小さいほど初期の追従誤差は大きくなりましたが、振動振幅はほとんど変わりませんでした。これらの結果はRRLがMPC入力の変化を補償している可能性を示唆しており、さらなる精度向上のためには報酬重みの最適化が必要です。前後のページとのつながり
+「重み最適化が必要」という結論から、最後の Slide 18 で「今後の課題（Future Work）」へ自然につなげる。   Slide 18：Future Workこのページで伝える目的
+報酬重みの最適化、学習効率の評価、制御性能の評価という3つの今後の課題を伝え、発表を締めくくる。   英語原稿
+Finally, here is my future work. First, I will work on reward weight optimization and explore suitable optimization methods. Second, I will evaluate learning efficiency, including training iterations. Third, I will evaluate control performance under different conditions. Through these steps, I aim to further improve both learning and control performance. Thank you for your attention.日本語訳
+最後に、今後の課題です。1つ目は、報酬重みの最適化に取り組み、適切な最適化手法を検討することです。2つ目は、学習回数を含めた学習効率を評価することです。3つ目は、異なる条件下での制御性能を評価することです。これらの取り組みを通じて、学習性能と制御性能をさらに改善することを目指します。ご清聴ありがとうございました。前後のページとのつながり
+研究の展望を述べて発表全体を締めくくる。   全18スライドの原稿を作成しました。実際に音読してみて「ここはもう少し短くしたい」「この単語は言いにくい」と感じるスライドがあれば、番号を教えていただければそのスライドの原稿全体を調整します。
